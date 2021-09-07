@@ -3,8 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log adheres to standards from [Keep a CHANGELOG](http://keepachangelog.com).
 
-## [Unreleased]
-- none
+## [2.4.0] - 2021-09-07
+- Rename package to `@silverhand/eslint-plugin-fp` for further maintenance
+- Use pnpm for package management
+- Upgrade dependecies and fix ESLint errors
 
 ## [2.3.0] - 2017-01-01
 ### Added
