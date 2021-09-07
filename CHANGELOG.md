@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 This change log adheres to standards from [Keep a CHANGELOG](http://keepachangelog.com).
 
+## [2.4.1] - 2021-09-07
+### Improvement
+- Allow `.sort()` call which follows `.slice()`
+
 ## [2.4.0] - 2021-09-07
 - Rename package to `@silverhand/eslint-plugin-fp` for further maintenance
 - Use pnpm for package management
