@@ -68,7 +68,7 @@ module.exports = {
     docs: {
       description: 'Enforce that an expression gets used.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-unused-expression.md',
+      url: 'https://github.com/silverhand-io/eslint-plugin-fp/blob/master/docs/rules/no-unused-expression.md',
     },
   },
 };

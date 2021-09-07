@@ -20,7 +20,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of `class`.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-class.md',
+      url: 'https://github.com/silverhand-io/eslint-plugin-fp/blob/master/docs/rules/no-class.md',
     },
   },
 };

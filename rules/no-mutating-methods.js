@@ -117,7 +117,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of mutating methods.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-mutating-methods.md',
+      url: 'https://github.com/silverhand-io/eslint-plugin-fp/blob/master/docs/rules/no-mutating-methods.md',
     },
   },
 };
