@@ -6,17 +6,17 @@ const isObjectAssign = _.matches({
   type: 'MemberExpression',
   object: {
     type: 'Identifier',
-    name: 'Object'
+    name: 'Object',
   },
   property: {
     type: 'Identifier',
-    name: 'assign'
-  }
+    name: 'assign',
+  },
 });
 
 const isObjectExpression = _.flow(
   _.property('type'),
-  _.includes(_, ['ObjectExpression', 'ArrayExpression'])
+  _.includes(_, ['ObjectExpression', 'ArrayExpression']),
 );
 
 const isObjectCreateNull = _.matches({
@@ -25,22 +25,22 @@ const isObjectCreateNull = _.matches({
     type: 'MemberExpression',
     object: {
       type: 'Identifier',
-      name: 'Object'
+      name: 'Object',
     },
     property: {
       type: 'Identifier',
-      name: 'create'
-    }
+      name: 'create',
+    },
   },
   arguments: [{
     type: 'Literal',
-    value: null
-  }]
+    value: null,
+  }],
 });
 
 const isFunctionExpression = _.flow(
   _.property('type'),
-  _.includes(_, ['FunctionExpression', 'ArrowFunctionExpression'])
+  _.includes(_, ['FunctionExpression', 'ArrowFunctionExpression']),
 );
 
 function isAllowedFirstArgument(arg) {
@@ -53,10 +53,10 @@ const create = function (context) {
       if (isObjectAssign(node.callee) && !isAllowedFirstArgument(node.arguments[0])) {
         context.report({
           node,
-          message: 'Unallowed use of mutating `Object.assign`'
+          message: 'Unallowed use of mutating `Object.assign`',
         });
       }
-    }
+    },
   };
 };
 
@@ -66,7 +66,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of [`Object.assign()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) with a variable as first argument.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-mutating-assign.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-mutating-assign.md',
+    },
+  },
 };

@@ -1,20 +1,20 @@
 'use strict';
 
-const mutatingMethods = [
+const mutatingMethods = new Set([
   '__defineGetter__',
-  '__defineSetter__'
-];
+  '__defineSetter__',
+]);
 
 function getNameIfPropertyIsIdentifier(property) {
-  return property.type === 'Identifier' &&
-    mutatingMethods.indexOf(property.name) !== -1 &&
-    property.name;
+  return property.type === 'Identifier'
+    && mutatingMethods.has(property.name)
+    && property.name;
 }
 
 function getNameIfPropertyIsLiteral(property) {
-  return property.type === 'Literal' &&
-    mutatingMethods.indexOf(property.value) !== -1 &&
-    property.value;
+  return property.type === 'Literal'
+    && mutatingMethods.has(property.value)
+    && property.value;
 }
 
 const create = function (context) {
@@ -23,7 +23,7 @@ const create = function (context) {
       if (node.kind === 'get' || node.kind === 'set') {
         context.report({
           node,
-          message: `Unallowed use of \`${node.kind}\``
+          message: `Unallowed use of \`${node.kind}\``,
         });
       }
     },
@@ -36,12 +36,12 @@ const create = function (context) {
       if (name) {
         context.report({
           node,
-          message: name === '__defineGetter__' ?
-            'Unallowed use of a getter using `__defineGetter__`' :
-            'Unallowed use of a setter using `__defineSetter__`'
+          message: name === '__defineGetter__'
+            ? 'Unallowed use of a getter using `__defineGetter__`'
+            : 'Unallowed use of a setter using `__defineSetter__`',
         });
       }
-    }
+    },
   };
 };
 
@@ -51,7 +51,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of getters and setters.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-get-set.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-get-set.md',
+    },
+  },
 };

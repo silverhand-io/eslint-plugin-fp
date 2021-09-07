@@ -1,24 +1,24 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-class';
+import rule from '../rules/no-class.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = {
   ruleId: 'no-class',
-  message: 'Unallowed use of `class`. Use functions instead'
+  message: 'Unallowed use of `class`. Use functions instead',
 };
 
 ruleTester.run('no-class', rule, {
   valid: [
-    'function foo() {}'
+    'function foo() {}',
   ],
   invalid: [
     {
@@ -28,19 +28,19 @@ ruleTester.run('no-class', rule, {
           this.width = width;
         }
       }`,
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'export default class MyComponent extends React.Component {}',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'module.exports = class MyClass {}',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'const MyClass = class {}',
-      errors: [error]
-    }
-  ]
+      errors: [error],
+    },
+  ],
 });

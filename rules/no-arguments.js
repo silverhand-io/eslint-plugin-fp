@@ -2,19 +2,19 @@
 
 function isProperty(node) {
   return Boolean(
-    node &&
-    node.parent &&
-    node.parent.type === 'Property' &&
-    node.parent.key === node
+    node
+    && node.parent
+    && node.parent.type === 'Property'
+    && node.parent.key === node,
   );
 }
 
 function isPropertyAccess(node) {
   return Boolean(
-    node &&
-    node.parent &&
-    node.parent.type === 'MemberExpression' &&
-    node.parent.property === node
+    node
+    && node.parent
+    && node.parent.type === 'MemberExpression'
+    && node.parent.property === node,
   );
 }
 
@@ -24,10 +24,10 @@ const create = function (context) {
       if (node.name === 'arguments' && !isProperty(node) && !isPropertyAccess(node)) {
         context.report({
           node,
-          message: 'Unallowed use of `arguments`. Use regular function arguments instead'
+          message: 'Unallowed use of `arguments`. Use regular function arguments instead',
         });
       }
-    }
+    },
   };
 };
 
@@ -37,7 +37,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of `arguments`.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-arguments.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-arguments.md',
+    },
+  },
 };

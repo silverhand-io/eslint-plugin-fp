@@ -1,19 +1,19 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-mutating-assign';
+import rule from '../rules/no-mutating-assign.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = {
   ruleId: 'no-mutating-assign',
-  message: 'Unallowed use of mutating `Object.assign`'
+  message: 'Unallowed use of mutating `Object.assign`',
 };
 
 ruleTester.run('no-mutating-assign', rule, {
@@ -30,40 +30,40 @@ ruleTester.run('no-mutating-assign', rule, {
     'Object.assign([1, 2], b);',
     'Object.assign(() => {}, a);',
     'Object.assign(function() {}, a);',
-    'Object.assign(function foo() {}, a);'
+    'Object.assign(function foo() {}, a);',
   ],
   invalid: [
     {
       code: 'Object.assign();',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'Object.assign(a);',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'Object.assign(a, b);',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'Object.assign(a, b, c, d, e);',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'var a = {foo: 1, bar: 2}; Object.assign(a, b);',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'var fn = () => {}; Object.assign(fn, b);',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'function fn() {}; Object.assign(fn, b);',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'Object.assign(Object.create)',
-      errors: [error]
-    }
-  ]
+      errors: [error],
+    },
+  ],
 });

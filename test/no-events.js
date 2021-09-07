@@ -1,19 +1,19 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-events';
+import rule from '../rules/no-events.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = {
   ruleId: 'no-events',
-  message: 'Unallowed use of `events`'
+  message: 'Unallowed use of `events`',
 };
 
 ruleTester.run('no-events', rule, {
@@ -25,20 +25,20 @@ ruleTester.run('no-events', rule, {
     'require("foo");',
     'require("eventsE");',
     'require("Efoo");',
-    'var events;'
+    'var events;',
   ],
   invalid: [
     {
       code: 'import EventEmitter from "events";',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'import {listen} from "events";',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'require("events");',
-      errors: [error]
-    }
-  ]
+      errors: [error],
+    },
+  ],
 });

@@ -6,10 +6,10 @@ const create = function (context) {
       if (node.kind === 'let') {
         context.report({
           node,
-          message: 'Unallowed use of `let`. Use `const` instead'
+          message: 'Unallowed use of `let`. Use `const` instead',
         });
       }
-    }
+    },
   };
 };
 
@@ -19,7 +19,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of `let`.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-let.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-let.md',
+    },
+  },
 };

@@ -6,16 +6,16 @@ const isModuleExports = _.matches({
   type: 'MemberExpression',
   object: {
     type: 'Identifier',
-    name: 'module'
+    name: 'module',
   },
   property: {
     type: 'Identifier',
-    name: 'exports'
-  }
+    name: 'exports',
+  },
 });
 
 const isExports = _.matches({
-  type: 'Identifier', name: 'exports'
+  type: 'Identifier', name: 'exports',
 });
 
 function isModuleExportsMemberExpression(node) {
@@ -24,7 +24,7 @@ function isModuleExportsMemberExpression(node) {
     isModuleExports,
     function (node) {
       return node.type === 'MemberExpression' && isModuleExportsMemberExpression(node.object);
-    }
+    },
   ])(node);
 }
 
@@ -33,8 +33,8 @@ const isCommonJsExport = _.flow(
   _.overSome([
     isExports,
     isModuleExports,
-    isModuleExportsMemberExpression
-  ])
+    isModuleExportsMemberExpression,
+  ]),
 );
 
 function errorMessage(isCommonJs) {
@@ -46,13 +46,16 @@ function makeException(exception) {
   if (!exception.object && !exception.property) {
     return _.stubFalse;
   }
+
   let query = {type: 'MemberExpression'};
   if (exception.object) {
     query = _.assign(query, {object: {type: 'Identifier', name: exception.object}});
   }
+
   if (exception.property) {
     query = _.assign(query, {property: {type: 'Identifier', name: exception.property}});
   }
+
   return _.matches(query);
 }
 
@@ -60,9 +63,10 @@ function isExempted(exceptions, node) {
   if (node.type !== 'MemberExpression') {
     return false;
   }
+
   const matches = exceptions.some(matcher => matcher(node));
-  return matches ||
-    (node.object.type === 'MemberExpression' && isExempted(exceptions, node.object));
+  return matches
+    || (node.object.type === 'MemberExpression' && isExempted(exceptions, node.object));
 }
 
 const create = function (context) {
@@ -72,23 +76,25 @@ const create = function (context) {
   if (options.allowThis) {
     exceptions.push(_.matches({type: 'MemberExpression', object: {type: 'ThisExpression'}}));
   }
+
   return {
     AssignmentExpression(node) {
       const isCommonJs = isCommonJsExport(node);
       if ((isCommonJs && acceptCommonJs) || isExempted(exceptions, node.left)) {
         return;
       }
+
       context.report({
         node,
-        message: errorMessage(isCommonJs)
+        message: errorMessage(isCommonJs),
       });
     },
     UpdateExpression(node) {
       context.report({
         node,
-        message: `Unallowed use of \`${node.operator}\` operator`
+        message: `Unallowed use of \`${node.operator}\` operator`,
       });
-    }
+    },
   };
 };
 
@@ -96,10 +102,10 @@ const schema = [{
   type: 'object',
   properties: {
     commonjs: {
-      type: 'boolean'
+      type: 'boolean',
     },
     allowThis: {
-      type: 'boolean'
+      type: 'boolean',
     },
     exceptions: {
       type: 'array',
@@ -107,15 +113,15 @@ const schema = [{
         type: 'object',
         properties: {
           object: {
-            type: 'string'
+            type: 'string',
           },
           property: {
-            type: 'string'
-          }
-        }
-      }
-    }
-  }
+            type: 'string',
+          },
+        },
+      },
+    },
+  },
 }];
 
 module.exports = {
@@ -125,7 +131,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of mutating operators.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-mutation.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-mutation.md',
+    },
+  },
 };

@@ -1,19 +1,19 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-nil';
+import rule from '../rules/no-nil.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = message => ({
   ruleId: 'no-nil',
-  message
+  message,
 });
 const useOfNullOrUndefinedError = error('Unallowed use of `null` or `undefined`');
 const notInitializedError = error('Variable must be initialized, so that it doesn\'t evaluate to `undefined`');
@@ -38,128 +38,128 @@ ruleTester.run('no-nil', rule, {
     'a !== undefined',
     'function foo() { return 1; }',
     'function foo(a=1) { return 1; }',
-    'const foo = () => 1;'
+    'const foo = () => 1;',
   ],
   invalid: [
     {
       code: 'var a = null;',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'let a = null;',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'const a = null;',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'var a = undefined;',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'let a = undefined;',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'const a = undefined;',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'a < null;',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'a < undefined;',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'a < undefined;',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'a === foo || null',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: '(a === foo) || null',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'a === (foo || null)',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'const obj = {foo: null};',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'const obj = {foo: undefined};',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'let a;',
-      errors: [notInitializedError]
+      errors: [notInitializedError],
     },
     {
       code: 'var a;',
-      errors: [notInitializedError]
+      errors: [notInitializedError],
     },
     {
       code: 'var a, b;',
-      errors: [notInitializedError, notInitializedError]
+      errors: [notInitializedError, notInitializedError],
     },
     {
       code: 'function foo(a=null) { return 1; }',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'function foo(a=undefined) { return 1; }',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'const foo = () => null',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'const foo = () => undefined',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'const foo = () => {}',
-      errors: [functionReturnError]
+      errors: [functionReturnError],
     },
     {
       code: 'function foo() {}',
-      errors: [functionReturnError]
+      errors: [functionReturnError],
     },
     {
       code: 'function foo() { return; }',
-      errors: [returnUndefinedError]
+      errors: [returnUndefinedError],
     },
     {
       code: 'function foo() { return null; }',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'function foo() { return undefined; }',
-      errors: [useOfNullOrUndefinedError]
+      errors: [useOfNullOrUndefinedError],
     },
     {
       code: 'function foo() { if (foo) { return; } return a + b; }',
-      errors: [returnUndefinedError]
+      errors: [returnUndefinedError],
     },
     {
       code: 'a.map(function() {});',
-      errors: [functionReturnError]
+      errors: [functionReturnError],
     },
     {
       code: 'function foo() { a + b; }',
-      errors: [functionReturnError]
+      errors: [functionReturnError],
     },
     {
       code: 'function foo() { a + b; return; }',
-      errors: [returnUndefinedError]
-    }
-  ]
+      errors: [returnUndefinedError],
+    },
+  ],
 });

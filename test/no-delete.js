@@ -1,19 +1,19 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-delete';
+import rule from '../rules/no-delete.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = {
   ruleId: 'no-delete',
-  message: 'Unallowed use of `delete`'
+  message: 'Unallowed use of `delete`',
 };
 
 ruleTester.run('no-delete', rule, {
@@ -26,16 +26,16 @@ ruleTester.run('no-delete', rule, {
     '-foo[bar]',
     '+ foo[bar]',
     '- foo[bar]',
-    'bar.delete'
+    'bar.delete',
   ],
   invalid: [
     {
       code: 'delete foo.bar;',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'delete foo[bar];',
-      errors: [error]
-    }
-  ]
+      errors: [error],
+    },
+  ],
 });

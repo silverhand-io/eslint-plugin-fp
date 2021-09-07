@@ -1,20 +1,20 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-rest-parameters';
+import rule from '../rules/no-rest-parameters.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
     parser: 'babel-eslint',
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = {
   ruleId: 'no-rest-parameters',
-  message: 'Unallowed use of rest parameters. Use regular function arguments instead'
+  message: 'Unallowed use of rest parameters. Use regular function arguments instead',
 };
 
 ruleTester.run('no-rest-parameters', rule, {
@@ -29,31 +29,31 @@ ruleTester.run('no-rest-parameters', rule, {
       code: 'var a = {...b, c: 1}',
       parserOptions: {
         ecmaFeatures: {
-          experimentalObjectRestSpread: true
-        }
-      }
-    }
+          experimentalObjectRestSpread: true,
+        },
+      },
+    },
   ],
   invalid: [
     {
       code: 'function foo(...args) {}',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'function foo(a, b, ...args) {}',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'fn(function(...args) {})',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'var foo = function(...args) {}',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'var foo = (...args) => {}',
-      errors: [error]
-    }
-  ]
+      errors: [error],
+    },
+  ],
 });

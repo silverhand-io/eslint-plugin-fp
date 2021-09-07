@@ -3,32 +3,32 @@
 const _ = require('lodash/fp');
 
 function isComparison(node) {
-  return node.parent &&
-    node.parent.type === 'BinaryExpression' &&
-    _.includes(node.parent.operator, ['==', '!=', '===', '!==']);
+  return node.parent
+    && node.parent.type === 'BinaryExpression'
+    && _.includes(node.parent.operator, ['==', '!=', '===', '!==']);
 }
 
 function reportUseOutsideOfComparison(context, node) {
   if (!isComparison(node)) {
     context.report({
       node,
-      message: 'Unallowed use of `null` or `undefined`'
+      message: 'Unallowed use of `null` or `undefined`',
     });
   }
 }
 
 const endsWithReturnStatement = _.flow(
   _.last,
-  _.matches({type: 'ReturnStatement'})
+  _.matches({type: 'ReturnStatement'}),
 );
 
 function reportFunctions(context, node) {
-  if (node.body.type === 'BlockStatement' &&
-    !endsWithReturnStatement(node.body.body)
+  if (node.body.type === 'BlockStatement'
+    && !endsWithReturnStatement(node.body.body)
   ) {
     context.report({
       node,
-      message: 'Function must end with a return statement, so that it doesn\'t return `undefined`'
+      message: 'Function must end with a return statement, so that it doesn\'t return `undefined`',
     });
   }
 }
@@ -50,7 +50,7 @@ const create = function (context) {
       if (node.init === null) {
         context.report({
           node,
-          message: 'Variable must be initialized, so that it doesn\'t evaluate to `undefined`'
+          message: 'Variable must be initialized, so that it doesn\'t evaluate to `undefined`',
         });
       }
     },
@@ -58,13 +58,13 @@ const create = function (context) {
       if (node.argument === null) {
         context.report({
           node,
-          message: 'Return statement must return an explicit value, so that it doesn\'t evaluate to `undefined`'
+          message: 'Return statement must return an explicit value, so that it doesn\'t evaluate to `undefined`',
         });
       }
     },
     ArrowFunctionExpression: reportFunc,
     FunctionDeclaration: reportFunc,
-    FunctionExpression: reportFunc
+    FunctionExpression: reportFunc,
   };
 };
 
@@ -74,7 +74,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of `null` and `undefined`.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-nil.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-nil.md',
+    },
+  },
 };

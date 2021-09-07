@@ -1,39 +1,39 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-proxy';
+import rule from '../rules/no-proxy.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = {
   ruleId: 'no-proxy',
-  message: 'Unallowed use of `Proxy`'
+  message: 'Unallowed use of `Proxy`',
 };
 
 ruleTester.run('no-proxy', rule, {
   valid: [
     'Map',
     'Map()',
-    'new Map()'
+    'new Map()',
   ],
   invalid: [
     {
       code: 'Proxy',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'new Proxy(foo, bar);',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'Proxy.revocable()',
-      errors: [error]
-    }
-  ]
+      errors: [error],
+    },
+  ],
 });

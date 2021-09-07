@@ -1,14 +1,14 @@
 'use strict';
 
 function isValueOfProperty(node) {
-  return (node.key.type === 'Identifier' && node.key.name === 'valueOf') ||
-    (node.key.type === 'Literal' && node.key.value === 'valueOf');
+  return (node.key.type === 'Identifier' && node.key.name === 'valueOf')
+    || (node.key.type === 'Literal' && node.key.value === 'valueOf');
 }
 
 function report(context, node) {
   context.report({
     node,
-    message: 'Unallowed use of `valueOf` field'
+    message: 'Unallowed use of `valueOf` field',
   });
 }
 
@@ -20,13 +20,13 @@ const create = function (context) {
       }
     },
     AssignmentExpression(node) {
-      if (node.left.type === 'MemberExpression' &&
-        node.left.property.type === 'Identifier' &&
-        node.left.property.name === 'valueOf'
+      if (node.left.type === 'MemberExpression'
+        && node.left.property.type === 'Identifier'
+        && node.left.property.name === 'valueOf'
       ) {
         report(context, node.left.property);
       }
-    }
+    },
   };
 };
 
@@ -36,7 +36,7 @@ module.exports = {
     docs: {
       description: 'Forbid the creation of `valueOf` fields.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-valueof-field.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-valueof-field.md',
+    },
+  },
 };

@@ -1,19 +1,19 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-let';
+import rule from '../rules/no-let.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = {
   ruleId: 'no-let',
-  message: 'Unallowed use of `let`. Use `const` instead'
+  message: 'Unallowed use of `let`. Use `const` instead',
 };
 
 ruleTester.run('no-let', rule, {
@@ -27,32 +27,32 @@ ruleTester.run('no-let', rule, {
     'var a, b;',
     'var a = 1;',
     'var a = 1, b = 2;',
-    'var a = 1; const b = 2;'
+    'var a = 1; const b = 2;',
   ],
   invalid: [
     {
       code: 'let a;',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'let a, b;',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'let a = 2',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'let a = 2, b = 100;',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'let a = 2; let b = 100;',
-      errors: [error, error]
+      errors: [error, error],
     },
     {
       code: 'export let a = 2;',
-      errors: [error]
-    }
-  ]
+      errors: [error],
+    },
+  ],
 });

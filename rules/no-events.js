@@ -5,7 +5,7 @@ const astUtils = require('eslint-ast-utils');
 function report(context, node) {
   context.report({
     node,
-    message: 'Unallowed use of `events`'
+    message: 'Unallowed use of `events`',
   });
 }
 
@@ -20,7 +20,7 @@ const create = function (context) {
       if (astUtils.isStaticRequire(node) && node.arguments[0].value === 'events') {
         report(context, node);
       }
-    }
+    },
   };
 };
 
@@ -30,7 +30,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of the `events` module.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-events.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-events.md',
+    },
+  },
 };

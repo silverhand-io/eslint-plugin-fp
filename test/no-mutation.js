@@ -1,19 +1,19 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-mutation';
+import rule from '../rules/no-mutation.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = message => ({
   ruleId: 'no-mutation',
-  message
+  message,
 });
 const reassignmentError = error('Unallowed reassignment');
 const incrementError = error('Unallowed use of `++` operator');
@@ -28,219 +28,219 @@ ruleTester.run('no-mutation', rule, {
     'function foo(a={}) {}',
     {
       code: 'exports = {};',
-      options: [{commonjs: true}]
+      options: [{commonjs: true}],
     },
     {
       code: 'exports.foo = {};',
-      options: [{commonjs: true}]
+      options: [{commonjs: true}],
     },
     {
       code: 'exports.foo.bar = {};',
-      options: [{commonjs: true}]
+      options: [{commonjs: true}],
     },
     {
       code: 'module.exports = {};',
-      options: [{commonjs: true}]
+      options: [{commonjs: true}],
     },
     {
       code: 'module.exports.foo = {};',
-      options: [{commonjs: true}]
+      options: [{commonjs: true}],
     },
     {
       code: 'module.exports.foo.bar = {};',
-      options: [{commonjs: true}]
+      options: [{commonjs: true}],
     },
     {
       code: 'foo.bar = {};',
       options: [{exceptions: [
-        {object: 'foo', property: 'bar'}
-      ]}]
+        {object: 'foo', property: 'bar'},
+      ]}],
     },
     {
       code: 'foo.bar = {};',
       options: [{exceptions: [
-        {object: 'foo'}
-      ]}]
+        {object: 'foo'},
+      ]}],
     },
     {
       code: 'baz.propTypes = {};',
       options: [{exceptions: [
-        {property: 'propTypes'}
-      ]}]
+        {property: 'propTypes'},
+      ]}],
     },
     {
       code: 'module.exports = {};',
       options: [{exceptions: [
-        {object: 'module', property: 'exports'}
-      ]}]
+        {object: 'module', property: 'exports'},
+      ]}],
     },
     {
       code: 'module.exports[foo].bar = {};',
       options: [{exceptions: [
-        {object: 'module', property: 'exports'}
-      ]}]
+        {object: 'module', property: 'exports'},
+      ]}],
     },
     {
       code: 'module.exports.foo = {};',
       options: [{exceptions: [
         {object: 'foo', property: 'bar'},
-        {object: 'module', property: 'exports'}
-      ]}]
+        {object: 'module', property: 'exports'},
+      ]}],
     },
     {
       code: 'foo.bar = {};',
       options: [{exceptions: [
         {object: 'foo', property: 'bar'},
-        {object: 'module', property: 'exports'}
-      ]}]
+        {object: 'module', property: 'exports'},
+      ]}],
     },
     {
       code: 'this.foo = 100;',
-      options: [{allowThis: true}]
+      options: [{allowThis: true}],
     },
     {
       code: 'this.foo.bar = 100;',
-      options: [{allowThis: true}]
+      options: [{allowThis: true}],
     },
     {
       code: 'function bar() { this.foo = 100; }',
-      options: [{allowThis: true}]
-    }
+      options: [{allowThis: true}],
+    },
   ],
   invalid: [
     {
       code: 'a = 2;',
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'a += 2;',
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'a -= 2;',
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'a *= 2;',
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'a /= 2;',
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'a %= 2;',
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'a++;',
-      errors: [incrementError]
+      errors: [incrementError],
     },
     {
       code: '++a;',
-      errors: [incrementError]
+      errors: [incrementError],
     },
     {
       code: 'a--;',
-      errors: [decrementError]
+      errors: [decrementError],
     },
     {
       code: '--a;',
-      errors: [decrementError]
+      errors: [decrementError],
     },
     {
       code: 'function foo(a) { a = a || {}; }',
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'module.foo = {};',
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'foo.exports = {};',
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'exports = {};',
-      errors: [commonJsError]
+      errors: [commonJsError],
     },
     {
       code: 'exports.foo = {};',
-      errors: [commonJsError]
+      errors: [commonJsError],
     },
     {
       code: 'exports.foo.bar = {};',
-      errors: [commonJsError]
+      errors: [commonJsError],
     },
     {
       code: 'exports[foo] = {};',
-      errors: [commonJsError]
+      errors: [commonJsError],
     },
     {
       code: 'exports.foo[bar] = {};',
-      errors: [commonJsError]
+      errors: [commonJsError],
     },
     {
       code: 'exports[foo].bar = {};',
-      errors: [commonJsError]
+      errors: [commonJsError],
     },
     {
       code: 'module.exports = {};',
-      errors: [commonJsError]
+      errors: [commonJsError],
     },
     {
       code: 'module.exports.foo = {};',
-      errors: [commonJsError]
+      errors: [commonJsError],
     },
     {
       code: 'module.exports[foo] = {};',
-      errors: [commonJsError]
+      errors: [commonJsError],
     },
     {
       code: 'module.exports.foo[bar] = {};',
-      errors: [commonJsError]
+      errors: [commonJsError],
     },
     {
       code: 'module.exports[foo].bar = {};',
-      errors: [commonJsError]
+      errors: [commonJsError],
     },
     {
       code: 'foo.bar = {};',
       options: [{exceptions: [
-        {object: 'foo', property: 'boo'}
+        {object: 'foo', property: 'boo'},
       ]}],
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'baz.propTypes = {};',
       options: [{exceptions: [
-        {object: 'foo'}
+        {object: 'foo'},
       ]}],
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'baz.propTypes = {};',
       options: [{exceptions: [
-        {property: 'props'}
+        {property: 'props'},
       ]}],
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'baz.propTypes = {};',
       options: [{exceptions: [{}]}],
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'this.foo = 100;',
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'this.foo.bar = 100;',
-      errors: [reassignmentError]
+      errors: [reassignmentError],
     },
     {
       code: 'function bar() { this.foo = 100; }',
-      errors: [reassignmentError]
-    }
-  ]
+      errors: [reassignmentError],
+    },
+  ],
 });

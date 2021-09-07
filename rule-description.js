@@ -1,31 +1,28 @@
-'use strict';
-
-const reqAll = require('req-all');
+const reqAll = require('import-modules');
 const createIndex = require('create-eslint-index');
-const index = require('./');
+const index = require('./index.js');
 
 const rules = reqAll('rules', {camelize: false});
 
 const settings = {
   descriptionField: 'meta.docs.description',
-  docPath: 'docs/rules'
+  docPath: 'docs/rules',
 };
 
 const exampleConfiguration = {
   name: 'my-awesome-project',
   eslintConfig: {
     env: {
-      es6: true
+      es6: true,
     },
     plugins: [
-      'fp'
+      'fp',
     ],
-    rules: index.configs.recommended.rules
-  }
+    rules: index.configs.recommended.rules,
+  },
 };
 
 module.exports = {
   RULES: `\n${createIndex.createRulesDescription(settings, rules)}\n\n`,
-  // eslint-disable-next-line prefer-template
-  EXAMPLE_CONFIGURATION: '\n```json\n' + JSON.stringify(exampleConfiguration, null, 2) + '\n```\n'
+  EXAMPLE_CONFIGURATION: '\n```json\n' + JSON.stringify(exampleConfiguration, null, 2) + '\n```\n',
 };

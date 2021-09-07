@@ -1,19 +1,19 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-arguments';
+import rule from '../rules/no-arguments.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = {
   ruleId: 'no-arguments',
-  message: 'Unallowed use of `arguments`. Use regular function arguments instead'
+  message: 'Unallowed use of `arguments`. Use regular function arguments instead',
 };
 
 ruleTester.run('no-arguments', rule, {
@@ -27,28 +27,28 @@ ruleTester.run('no-arguments', rule, {
     'function foo() { console.log(argument); }',
     'function foo() { console.log(node.arguments); }',
     'node.arguments',
-    'var obj = { arguments: [] }'
+    'var obj = { arguments: [] }',
   ],
   invalid: [
     {
       code: 'function foo() { console.log(arguments); }',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'function foo() { console.log(arguments[0]); }',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'function foo() { console.log(arguments.node); }',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'function foo() { console.log({value: arguments}); }',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'function foo() { var args = Array.prototype.slice.call(arguments); }',
-      errors: [error]
-    }
-  ]
+      errors: [error],
+    },
+  ],
 });

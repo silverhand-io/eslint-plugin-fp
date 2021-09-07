@@ -1,33 +1,33 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-throw';
+import rule from '../rules/no-throw.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = {
   ruleId: 'no-throw',
-  message: 'Unallowed use of `throw`'
+  message: 'Unallowed use of `throw`',
 };
 
 ruleTester.run('no-throw', rule, {
   valid: [
-    'new Error("foo");'
+    'new Error("foo");',
   ],
   invalid: [
     {
       code: 'throw new Error("foo");',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'throw error;',
-      errors: [error]
-    }
-  ]
+      errors: [error],
+    },
+  ],
 });

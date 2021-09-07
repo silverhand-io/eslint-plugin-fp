@@ -6,10 +6,10 @@ const create = function (context) {
       if (node.operator === 'delete') {
         context.report({
           node,
-          message: 'Unallowed use of `delete`'
+          message: 'Unallowed use of `delete`',
         });
       }
-    }
+    },
   };
 };
 
@@ -19,7 +19,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of `delete`.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-delete.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-delete.md',
+    },
+  },
 };

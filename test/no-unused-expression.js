@@ -1,19 +1,19 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-unused-expression';
+import rule from '../rules/no-unused-expression.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = {
   ruleId: 'no-unused-expression',
-  message: 'Unused expression'
+  message: 'Unused expression',
 };
 
 ruleTester.run('no-unused-expression', rule, {
@@ -37,65 +37,65 @@ ruleTester.run('no-unused-expression', rule, {
     'class MyClass extends SuperClass { constructor(arg) { super(arg) } }',
     {
       code: '"use strict";',
-      options: [{allowUseStrict: true}]
+      options: [{allowUseStrict: true}],
     },
     {
       code: 'function foo() { "use strict"; return 2; }',
-      options: [{allowUseStrict: true}]
-    }
+      options: [{allowUseStrict: true}],
+    },
   ],
   invalid: [
     {
       code: 'foo;',
-      errors: [error]
+      errors: [error],
     },
     {
       code: '[];',
-      errors: [error]
+      errors: [error],
     },
     {
       code: '1 + 2;',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'foo()',
-      errors: [error]
+      errors: [error],
     },
     {
       code: '1, 2;',
-      errors: [error]
+      errors: [error],
     },
     {
       code: '(1, 2);',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'var a = (1, 2);',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'a = (1, 2);',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'a = 1, 2;',
-      errors: [error]
+      errors: [error],
     },
     {
       code: '[].forEach(function() {})',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'function foo(a, b) { a + b; }',
-      errors: [error]
+      errors: [error],
     },
     {
       code: '"use strict";',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'function foo() { "use strict"; return 2; }',
-      errors: [error]
+      errors: [error],
     },
     {
       code: [
@@ -104,9 +104,9 @@ ruleTester.run('no-unused-expression', rule, {
         '    super(arg);',
         '    super.method();',
         '  }',
-        '}'
+        '}',
       ].join('\n'),
-      errors: [error]
-    }
-  ]
+      errors: [error],
+    },
+  ],
 });

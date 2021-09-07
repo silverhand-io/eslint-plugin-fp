@@ -1,19 +1,19 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-valueof-field';
+import rule from '../rules/no-valueof-field.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const error = {
   ruleId: 'no-valueof-field',
-  message: 'Unallowed use of `valueOf` field'
+  message: 'Unallowed use of `valueOf` field',
 };
 
 ruleTester.run('no-valueof-field', rule, {
@@ -25,28 +25,28 @@ ruleTester.run('no-valueof-field', rule, {
     'const object = {}; object.prototype.value = () => {}',
     'valueOf = 2;',
     'object.valueOf();',
-    'const array = [valueOf, valueOf];'
+    'const array = [valueOf, valueOf];',
   ],
   invalid: [
     {
       code: 'const object = { valueOf: () => {} };',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'const object = { ["valueOf"]: () => {} };',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'const valueOf = () => {}; const object = { valueOf };',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'const object = {}; object.valueOf = () => {}',
-      errors: [error]
+      errors: [error],
     },
     {
       code: 'object.prototype.valueOf = () => {}',
-      errors: [error]
-    }
-  ]
+      errors: [error],
+    },
+  ],
 });

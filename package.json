@@ -1,16 +1,16 @@
 {
-  "name": "eslint-plugin-fp",
+  "name": "@silverhand/eslint-plugin-fp",
   "version": "2.3.0",
   "description": "ESLint rules for functional programming",
   "license": "MIT",
-  "repository": "jfmengels/eslint-plugin-fp",
+  "repository": "silverhand-io/eslint-plugin-fp",
   "author": {
     "name": "Jeroen Engels",
     "email": "jfm.engels@gmail.com",
-    "url": "github.com/jfmengels"
+    "url": "https://github.com/jfmengels"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=14.15.0"
   },
   "scripts": {
     "test": "xo && nyc ava",
@@ -42,22 +42,27 @@
   "dependencies": {
     "create-eslint-index": "^1.0.0",
     "eslint-ast-utils": "^1.0.0",
-    "lodash": "^4.13.1",
-    "req-all": "^0.1.0"
+    "import-modules": "^2.1.0",
+    "lodash": "^4.13.1"
   },
   "devDependencies": {
     "ava": "^0.17.0",
+    "eslint": "^7.32.0",
     "eslint-ava-rule-tester": "^0.1.1",
     "inject-in-tag": "^1.1.1",
-    "nyc": "^6.4.4",
-    "pify": "^2.3.0",
-    "xo": "^0.15.1"
+    "nyc": "^15.1.0",
+    "pify": "^5.0.0",
+    "xo": "^0.44.0"
   },
   "peerDependencies": {
-    "eslint": ">=3"
+    "eslint": "^7.32.0"
   },
   "xo": {
     "esnext": true,
-    "space": 2
+    "space": 2,
+    "rules": {
+      "unicorn/prefer-module": "off",
+      "unicorn/prefer-node-protocol": "off"
+    }
   }
 }

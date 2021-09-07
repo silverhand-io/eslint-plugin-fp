@@ -6,10 +6,10 @@ const create = function (context) {
       if (node.name === 'Proxy') {
         context.report({
           node,
-          message: 'Unallowed use of `Proxy`'
+          message: 'Unallowed use of `Proxy`',
         });
       }
-    }
+    },
   };
 };
 
@@ -19,7 +19,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of `Proxy`.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-proxy.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-proxy.md',
+    },
+  },
 };

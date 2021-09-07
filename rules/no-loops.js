@@ -4,14 +4,14 @@ const create = function (context) {
   function reportForLoop(node) {
     context.report({
       node,
-      message: 'Unallowed use of `for` loop'
+      message: 'Unallowed use of `for` loop',
     });
   }
 
   function reportWhileLoop(node) {
     context.report({
       node,
-      message: 'Unallowed use of `while` loop. Use recursion instead'
+      message: 'Unallowed use of `while` loop. Use recursion instead',
     });
   }
 
@@ -21,7 +21,7 @@ const create = function (context) {
     ForOfStatement: reportForLoop,
 
     WhileStatement: reportWhileLoop,
-    DoWhileStatement: reportWhileLoop
+    DoWhileStatement: reportWhileLoop,
   };
 };
 
@@ -31,7 +31,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of loops.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-loops.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-loops.md',
+    },
+  },
 };

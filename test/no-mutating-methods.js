@@ -1,24 +1,24 @@
 import test from 'ava';
 import avaRuleTester from 'eslint-ava-rule-tester';
-import rule from '../rules/no-mutating-methods';
+import rule from '../rules/no-mutating-methods.js';
 
 const ruleTester = avaRuleTester(test, {
   env: {
-    es6: true
+    es6: true,
   },
   parserOptions: {
-    sourceType: 'module'
-  }
+    sourceType: 'module',
+  },
 });
 
 const methodError = methodName => ({
   ruleId: 'no-mutating-methods',
-  message: `The use of method \`${methodName}\` is not allowed as it might be a mutating method`
+  message: `The use of method \`${methodName}\` is not allowed as it might be a mutating method`,
 });
 
 const objectError = methodName => ({
   ruleId: 'no-mutating-methods',
-  message: `The use of method \`Object.${methodName}\` is not allowed as it will mutate its arguments`
+  message: `The use of method \`Object.${methodName}\` is not allowed as it will mutate its arguments`,
 });
 
 ruleTester.run('no-mutating-methods', rule, {
@@ -30,140 +30,140 @@ ruleTester.run('no-mutating-methods', rule, {
     {
       code: '_.push(a, b)',
       options: [{
-        allowedObjects: ['_']
-      }]
+        allowedObjects: ['_'],
+      }],
     },
     {
       code: '_.sort(a, b)',
       options: [{
-        allowedObjects: ['_']
-      }]
+        allowedObjects: ['_'],
+      }],
     },
     {
       code: 'R.reverse(a, b)',
       options: [{
-        allowedObjects: ['R']
-      }]
+        allowedObjects: ['R'],
+      }],
     },
     {
       code: 'R.sort(a, b)',
       options: [{
-        allowedObjects: ['R']
-      }]
+        allowedObjects: ['R'],
+      }],
     },
     'Object.keys(a)',
-    'Object.values(a)'
+    'Object.values(a)',
   ],
   invalid: [
     {
       code: 'value.copyWithin(a);',
-      errors: [methodError('copyWithin')]
+      errors: [methodError('copyWithin')],
     },
     {
       code: 'value.pop(a);',
-      errors: [methodError('pop')]
+      errors: [methodError('pop')],
     },
     {
       code: 'value.push(a);',
-      errors: [methodError('push')]
+      errors: [methodError('push')],
     },
     {
       code: 'value.reverse(a);',
-      errors: [methodError('reverse')]
+      errors: [methodError('reverse')],
     },
     {
       code: 'value.shift(a);',
-      errors: [methodError('shift')]
+      errors: [methodError('shift')],
     },
     {
       code: 'value.sort(a);',
-      errors: [methodError('sort')]
+      errors: [methodError('sort')],
     },
     {
       code: 'value.splice(a);',
-      errors: [methodError('splice')]
+      errors: [methodError('splice')],
     },
     {
       code: 'value.unshift(a);',
-      errors: [methodError('unshift')]
+      errors: [methodError('unshift')],
     },
     {
       code: 'value.watch(a);',
-      errors: [methodError('watch')]
+      errors: [methodError('watch')],
     },
     {
       code: 'value.unwatch(a);',
-      errors: [methodError('unwatch')]
+      errors: [methodError('unwatch')],
     },
     {
       code: '_.sort(a)',
-      errors: [methodError('sort')]
+      errors: [methodError('sort')],
     },
     {
       code: 'value["push"](a)',
-      errors: [methodError('push')]
+      errors: [methodError('push')],
     },
     {
       code: 'value["pop"](a)',
-      errors: [methodError('pop')]
+      errors: [methodError('pop')],
     },
     {
       code: 'value.push(a)',
       options: [{
-        allowedObjects: ['foo']
+        allowedObjects: ['foo'],
       }],
-      errors: [methodError('push')]
+      errors: [methodError('push')],
     },
     {
       code: 'R.sort(a)',
       options: [{
-        allowedObjects: ['_']
+        allowedObjects: ['_'],
       }],
-      errors: [methodError('sort')]
+      errors: [methodError('sort')],
     },
     {
       code: 'R.sort(a)',
       options: [{
-        allowedObjects: ['ramda']
+        allowedObjects: ['ramda'],
       }],
-      errors: [methodError('sort')]
+      errors: [methodError('sort')],
     },
     {
       code: 'R.foo().sort(a)',
       options: [{
-        allowedObjects: ['R']
+        allowedObjects: ['R'],
       }],
-      errors: [methodError('sort')]
+      errors: [methodError('sort')],
     },
     {
       code: 'R.foo.sort(a)',
       options: [{
-        allowedObjects: ['R']
+        allowedObjects: ['R'],
       }],
-      errors: [methodError('sort')]
+      errors: [methodError('sort')],
     },
     {
       code: 'foo().sort(a)',
-      errors: [methodError('sort')]
+      errors: [methodError('sort')],
     },
     {
       code: 'R().sort(a)',
       options: [{
-        allowedObjects: ['R']
+        allowedObjects: ['R'],
       }],
-      errors: [methodError('sort')]
+      errors: [methodError('sort')],
     },
     {
       code: 'Object.defineProperties(a)',
-      errors: [objectError('defineProperties')]
+      errors: [objectError('defineProperties')],
     },
     {
       code: 'Object.defineProperty(a)',
-      errors: [objectError('defineProperty')]
+      errors: [objectError('defineProperty')],
     },
     {
       code: 'Object.setPrototypeOf(a)',
-      errors: [objectError('setPrototypeOf')]
-    }
-  ]
+      errors: [objectError('setPrototypeOf')],
+    },
+  ],
 });

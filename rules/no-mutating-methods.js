@@ -1,6 +1,6 @@
 'use strict';
 
-const mutatingMethods = [
+const mutatingMethods = new Set([
   'copyWithin',
   'pop',
   'push',
@@ -10,25 +10,25 @@ const mutatingMethods = [
   'splice',
   'unshift',
   'unwatch',
-  'watch'
-];
+  'watch',
+]);
 
-const mutatingObjectMethods = [
+const mutatingObjectMethods = new Set([
   'defineProperties',
   'defineProperty',
-  'setPrototypeOf'
-];
+  'setPrototypeOf',
+]);
 
 function getNameIfPropertyIsIdentifier(property) {
-  return property.type === 'Identifier' &&
-    mutatingMethods.indexOf(property.name) !== -1 &&
-    property.name;
+  return property.type === 'Identifier'
+    && mutatingMethods.has(property.name)
+    && property.name;
 }
 
 function getNameIfPropertyIsLiteral(property) {
-  return property.type === 'Literal' &&
-    mutatingMethods.indexOf(property.value) !== -1 &&
-    property.value;
+  return property.type === 'Literal'
+    && mutatingMethods.has(property.value)
+    && property.value;
 }
 
 const create = function (context) {
@@ -41,17 +41,18 @@ const create = function (context) {
         return;
       }
 
-      if (node.callee.object.type === 'Identifier' && allowedObjects.indexOf(node.callee.object.name) !== -1) {
+      if (node.callee.object.type === 'Identifier' && allowedObjects.includes(node.callee.object.name)) {
         return;
       }
 
       if (node.callee.object.name === 'Object') {
-        if (mutatingObjectMethods.indexOf(node.callee.property.name) !== -1) {
+        if (mutatingObjectMethods.has(node.callee.property.name)) {
           context.report({
             node,
-            message: `The use of method \`Object.${node.callee.property.name}\` is not allowed as it will mutate its arguments`
+            message: `The use of method \`Object.${node.callee.property.name}\` is not allowed as it will mutate its arguments`,
           });
         }
+
         return;
       }
 
@@ -59,11 +60,10 @@ const create = function (context) {
       if (name) {
         context.report({
           node,
-          message: `The use of method \`${name}\` is not allowed as it might be a mutating method`
+          message: `The use of method \`${name}\` is not allowed as it might be a mutating method`,
         });
-        return;
       }
-    }
+    },
   };
 };
 
@@ -73,10 +73,10 @@ const schema = [{
     allowedObjects: {
       type: 'array',
       items: {
-        type: 'string'
-      }
-    }
-  }
+        type: 'string',
+      },
+    },
+  },
 }];
 
 module.exports = {
@@ -86,7 +86,7 @@ module.exports = {
     docs: {
       description: 'Forbid the use of mutating methods.',
       recommended: 'error',
-      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-mutating-methods.md'
-    }
-  }
+      url: 'https://github.com/jfmengels/eslint-plugin-fp/tree/master/docs/rules/no-mutating-methods.md',
+    },
+  },
 };
