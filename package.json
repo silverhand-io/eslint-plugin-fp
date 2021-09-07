@@ -1,6 +1,6 @@
 {
   "name": "@silverhand/eslint-plugin-fp",
-  "version": "2.4.1",
+  "version": "2.4.2",
   "description": "ESLint rules for functional programming",
   "license": "MIT",
   "repository": "silverhand-io/eslint-plugin-fp",
