@@ -7,6 +7,10 @@ This change log adheres to standards from [Keep a CHANGELOG](http://keepachangel
 
 None
 
+## [2.4.2] - 2021-09-08
+### Fixed
+- Change rule URL to `silverhand-io` repo
+
 ## [2.4.1] - 2021-09-07
 ### Improvement
 - Allow `.sort()` call which follows `.slice()`
@@ -71,7 +75,8 @@ None
 - Added [`no-this`] rule
 - Added [`no-throw`] rule
 
-[Unreleased]: https://github.com/silverhand-io/eslint-plugin-fp/compare/v2.4.1...master
+[Unreleased]: https://github.com/silverhand-io/eslint-plugin-fp/compare/v2.4.2...master
+[2.4.2]: https://github.com/silverhand-io/eslint-plugin-fp/compare/v2.4.1...v2.4.2
 [2.4.1]: https://github.com/silverhand-io/eslint-plugin-fp/compare/v2.4.0...v2.4.1
 [2.4.0]: https://github.com/silverhand-io/eslint-plugin-fp/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/silverhand-io/eslint-plugin-fp/compare/v2.2.0...v2.3.0
