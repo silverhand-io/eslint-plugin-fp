@@ -43,6 +43,7 @@ Object.setPrototypeOf(object, prototype);
 ```js
 probableArray.foo();
 probableArray.concat(otherArray);
+probableArray.slice().sort(); // OK to call `.sort()` after `.slice()`
 
 Object.keys(object);
 

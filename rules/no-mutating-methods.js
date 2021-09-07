@@ -31,6 +31,24 @@ function getNameIfPropertyIsLiteral(property) {
     && property.value;
 }
 
+function isFollowedBySliceCallee(callee) {
+  /**
+   * `callee.object` will be always truthy.
+   * See https://github.com/estree/estree/blob/master/es5.md#memberexpression
+   */
+
+  if (callee.object.type !== 'CallExpression') {
+    return false;
+  }
+
+  if (!callee.object.callee || !callee.object.callee.property) {
+    return false;
+  }
+
+  const {property} = callee.object.callee;
+  return property.type === 'Identifier' && property.name === 'slice';
+}
+
 const create = function (context) {
   const options = context.options[0] || {};
   const allowedObjects = options.allowedObjects || [];
@@ -57,7 +75,20 @@ const create = function (context) {
       }
 
       const name = getNameIfPropertyIsIdentifier(node.callee.property) || getNameIfPropertyIsLiteral(node.callee.property);
+
       if (name) {
+        if (name === 'sort') {
+          // https://stackoverflow.com/questions/30431304/functional-non-destructive-array-sort
+          if (!isFollowedBySliceCallee(node.callee)) {
+            context.report({
+              node,
+              message: `The use of method \`${name}\` is not allowed as it might be a mutating method, use \`.slice()\` before to avoid direct mutation`,
+            });
+          }
+
+          return;
+        }
+
         context.report({
           node,
           message: `The use of method \`${name}\` is not allowed as it might be a mutating method`,

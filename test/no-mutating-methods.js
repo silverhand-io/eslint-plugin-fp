@@ -16,6 +16,11 @@ const methodError = methodName => ({
   message: `The use of method \`${methodName}\` is not allowed as it might be a mutating method`,
 });
 
+const sortMethodError = methodName => ({
+  ruleId: 'no-mutating-methods',
+  message: `The use of method \`${methodName}\` is not allowed as it might be a mutating method, use \`.slice()\` before to avoid direct mutation`,
+});
+
 const objectError = methodName => ({
   ruleId: 'no-mutating-methods',
   message: `The use of method \`Object.${methodName}\` is not allowed as it will mutate its arguments`,
@@ -26,6 +31,7 @@ ruleTester.run('no-mutating-methods', rule, {
     'value.foo()',
     'value.bar()',
     'value.concat()',
+    'value.slice().sort()',
     'value["foo"](a)',
     {
       code: '_.push(a, b)',
@@ -77,7 +83,7 @@ ruleTester.run('no-mutating-methods', rule, {
     },
     {
       code: 'value.sort(a);',
-      errors: [methodError('sort')],
+      errors: [sortMethodError('sort')],
     },
     {
       code: 'value.splice(a);',
@@ -97,7 +103,7 @@ ruleTester.run('no-mutating-methods', rule, {
     },
     {
       code: '_.sort(a)',
-      errors: [methodError('sort')],
+      errors: [sortMethodError('sort')],
     },
     {
       code: 'value["push"](a)',
@@ -119,39 +125,39 @@ ruleTester.run('no-mutating-methods', rule, {
       options: [{
         allowedObjects: ['_'],
       }],
-      errors: [methodError('sort')],
+      errors: [sortMethodError('sort')],
     },
     {
       code: 'R.sort(a)',
       options: [{
         allowedObjects: ['ramda'],
       }],
-      errors: [methodError('sort')],
+      errors: [sortMethodError('sort')],
     },
     {
       code: 'R.foo().sort(a)',
       options: [{
         allowedObjects: ['R'],
       }],
-      errors: [methodError('sort')],
+      errors: [sortMethodError('sort')],
     },
     {
       code: 'R.foo.sort(a)',
       options: [{
         allowedObjects: ['R'],
       }],
-      errors: [methodError('sort')],
+      errors: [sortMethodError('sort')],
     },
     {
       code: 'foo().sort(a)',
-      errors: [methodError('sort')],
+      errors: [sortMethodError('sort')],
     },
     {
       code: 'R().sort(a)',
       options: [{
         allowedObjects: ['R'],
       }],
-      errors: [methodError('sort')],
+      errors: [sortMethodError('sort')],
     },
     {
       code: 'Object.defineProperties(a)',
