@@ -1,6 +1,6 @@
-# eslint-plugin-fp [![Build Status](https://travis-ci.org/jfmengels/eslint-plugin-fp.svg?branch=master)](https://travis-ci.org/jfmengels/eslint-plugin-fp)
+# eslint-plugin-fp
 
-ESLint rules for functional programming
+ESLint rules for functional programming.
 
 
 ## Install
